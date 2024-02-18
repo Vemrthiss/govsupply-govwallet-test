@@ -23,7 +23,7 @@ export const connectToDB = async (): Promise<PoolClient | void> => {
   }
 };
 
-export const initDB = async () => {
+export const initDB = async (seedFile = "staff-id-to-team-mapping.csv") => {
   const client = await connectToDB();
   if (!client) {
     throw new Error("could not connect to client during db init");
@@ -65,17 +65,7 @@ export const initDB = async () => {
     }
   );
 
-  readCsvAndSave("staff-id-to-team-mapping.csv", client);
+  readCsvAndSave(seedFile, client);
 
   client.release();
-};
-
-export const resetDB = async () => {
-  const client = await connectToDB();
-  if (!client) {
-    throw new Error("could not connect to client during db reset");
-  }
-  client.query(`DROP TABLE ${STAFF_TABLE}, ${REDEMPTION_TABLE}`);
-  client.release();
-  initDB();
 };

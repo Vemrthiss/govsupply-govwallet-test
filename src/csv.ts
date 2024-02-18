@@ -29,7 +29,7 @@ export const readCsvAndSave = (filename: string, client: PoolClient): void => {
 
       data.forEach((row) => {
         client.query(
-          `INSERT INTO ${STAFF_TABLE} (staff_pass_id, team_name, created_at) VALUES ('${row.staff_pass_id}', '${row.team_name}', '${row.created_at}')`,
+          `INSERT INTO ${STAFF_TABLE} (staff_pass_id, team_name, created_at) VALUES ('${row.staff_pass_id}', '${row.team_name}', ${row.created_at})`,
           (err) => {
             if (err) {
               console.log(err.stack);

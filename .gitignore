@@ -6,3 +6,4 @@ assignment-brief.pdf
 
 node_modules
 dist
+spec/*.spec.js
