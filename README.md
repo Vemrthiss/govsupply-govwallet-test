@@ -59,5 +59,19 @@ The routes are self-explanatory in `src/app.ts` but to summarize, here are the a
 ## Key assumptions
 
 1. **One redemption per team**: All this data is for the christmas season, and is not expected to store across different festivities. Hence for this christmas, each redemption record in the redemption table is uniquely identified by the team name.
+2. **CSV formatting**: It is assumed the CSV files given follow the same format. 3 columns, team names being upper case etc. For a more robust system, this should be accounted for in the code level but for the purposes of the assignment, this assumption is made
 
 ## Future work
+
+Due to time constraints, more work needs to be done in improving unit testing. Immediate improvements would be to better mock the PostgreSQL database and allow jest tests to work properly. This is currently an obstacle in the `spec/db.spec.ts` and `spec/csv.spec.ts` files. I left my intended tests there anyway, and I am sure the this obstacle can be overcome sooner than later.
+
+## Optional: pgadmin4
+
+I personally did not use the pgadmin4 interface, but I added it as a service in the `docker-compose.yml` file, and a container will be created during docker compose. You can view it at port 8080.
+
+Simple credentials that can be found in the compose files are:
+
+- email: `user-name@domain-name.com`
+- password: `strong-password`
+
+I definitely do not condone this in any form of proper development or production, but it was a quick way to get it set up
