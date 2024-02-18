@@ -27,7 +27,7 @@ This will install the required images and run the containers.
 
 Two ports will be exposed: 3000 (express server) and 8080 (pgadmin 4).
 
-If you need to restart the containers, you can:
+If you need to restart the containers, you can do these steps sequentially:
 
 1. kill the terminal
 2. `docker-compose down`
@@ -60,6 +60,7 @@ The routes are self-explanatory in `src/app.ts` but to summarize, here are the a
 
 1. **One redemption per team**: All this data is for the christmas season, and is not expected to store across different festivities. Hence for this christmas, each redemption record in the redemption table is uniquely identified by the team name.
 2. **CSV formatting**: It is assumed the CSV files given follow the same format. 3 columns, team names being upper case etc. For a more robust system, this should be accounted for in the code level but for the purposes of the assignment, this assumption is made
+3. **CSV files location**: It is assumed that the csv files exist inside the `./csv` folder. The user must then specify which seed file to use to populate the database as mentioned earlier.
 
 ## Future work
 
