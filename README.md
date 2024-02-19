@@ -33,6 +33,16 @@ If you need to restart the containers, you can do these steps sequentially:
 2. `docker-compose down`
 3. `docker-compose up`
 
+## Running tests separately
+
+You can run all unit tests in the `spec` folder with the following command:
+
+```
+docker-compose run api npm run test
+```
+
+We use `api` because that is the service name of the app indicated in the docker compose file.
+
 ## Loading of data to PostgreSQL tables
 
 Before going into any other sections of this README, it is important to note that the database is loaded with CSV data via the `initDB` method `src/db.ts` file.
