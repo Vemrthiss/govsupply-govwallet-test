@@ -23,7 +23,9 @@ export const connectToDB = async (): Promise<PoolClient | void> => {
   }
 };
 
-export const initDB = async (seedFile = "staff-id-to-team-mapping.csv") => {
+export const initDB = async (
+  seedFile = "staff-id-to-team-mapping-long.csv"
+) => {
   const client = await connectToDB();
   if (!client) {
     throw new Error("could not connect to client during db init");
