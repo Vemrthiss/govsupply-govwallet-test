@@ -43,6 +43,12 @@ docker-compose run api npm run test
 
 We use `api` because that is the service name of the app indicated in the docker compose file.
 
+### Description on test suite
+
+The test suite tests the core functions in `functions.ts` and the express routes in `app.ts`. Since this is a _unit_ test suite, core functions with a singular purpose are tested, and express routes are tested for correctness of response status codes and response bodies.
+
+`csv.ts` and `db.ts` are not tested, as these belong to integration testing (that is not to say it is unimportant), which requires better setup to create a test database and test csv files etc, in order to test their functionalities.
+
 ## Loading of data to PostgreSQL tables
 
 Before going into any other sections of this README, it is important to note that the database is loaded with CSV data via the `initDB` method `src/db.ts` file.
@@ -74,7 +80,13 @@ The routes are self-explanatory in `src/app.ts` but to summarize, here are the a
 
 ## Future work
 
-Due to time constraints, more work needs to be done in improving unit testing. Immediate improvements would be to better mock the PostgreSQL database and allow jest tests to work properly. This is currently an obstacle in the `spec/db.spec.ts` and `spec/csv.spec.ts` files. I left my intended tests there anyway, and I am sure the this obstacle can be overcome sooner than later.
+Due to time constraints, more work can be done in improving testing. Immediate improvements would be to create an integration testing suite setup. This entails creating a test PostgreSQL database and allow modules that require interacting with a database to be tested for correctness.
+
+## Some acknowledgement of what is usually done in practice
+
+I am aware of key practices like ignoring env files should they contain secrets (in this case it did not), and usually engineers use Object Relational Mappers (ORMs) to interact with the database (such as TypeORM and Prisma for SQL-based DBs).
+
+However, since this is a simple project, it was decided to write the SQL queries directly to demonstrate some level of understanding.
 
 ## Optional: pgadmin4
 

@@ -1,9 +1,7 @@
-import {
-  getStaff,
-  checkTeamHasRedeemed,
-  processTeamRedemption,
-} from "../src/functions";
+import * as functions from "../src/functions";
 import { STAFF_TABLE, connectToDB } from "../src/db";
+
+const { getStaff, checkTeamHasRedeemed, processTeamRedemption } = functions;
 
 jest.mock("../src/db", () => ({
   connectToDB: jest.fn(),
@@ -41,7 +39,7 @@ describe("getStaff", () => {
     expect(mockClient.release).toHaveBeenCalled();
   });
 
-  it("should return staff when called with valid parameters (staff_pass_id)", async () => {
+  it("should return staff when called with valid parameters (team_name)", async () => {
     const mockClient = {
       query: jest.fn().mockResolvedValue({
         rows: [mockStaff],
@@ -127,5 +125,32 @@ describe("checkTeamHasRedeemed", () => {
     const hasRedeemed = await checkTeamHasRedeemed("team_name");
 
     expect(hasRedeemed).toBe(false);
+  });
+});
+
+describe("processTeamRedemption", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should throw error if team has redeemed", async () => {
+    const mockClient = {
+      query: jest.fn().mockResolvedValue({
+        rows: [
+          {
+            id: 0,
+            team_name: "team_name",
+            redeemed_at: 1000000,
+          },
+        ],
+      }),
+      release: jest.fn(),
+    };
+    // @ts-ignore
+    connectToDB.mockResolvedValueOnce(mockClient);
+
+    expect(async () => {
+      await processTeamRedemption("team_name");
+    }).rejects.toThrow();
   });
 });

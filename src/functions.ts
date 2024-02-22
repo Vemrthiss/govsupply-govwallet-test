@@ -19,7 +19,13 @@ export interface GetStaffQuery {
   team_name?: string;
 }
 
-export const getStaff = async (params: GetStaffQuery) => {
+export interface Redemption {
+  id: number;
+  team_name: string;
+  redeemed_at: number;
+}
+
+export const getStaff = async (params: GetStaffQuery): Promise<Staff[]> => {
   const client = await getClient();
   const whereClauses: string[] = []; // there will at least be 1
   if (params.staff_id) {
@@ -44,7 +50,9 @@ export const checkTeamHasRedeemed = async (teamName: string) => {
   return res.rows.length >= 1; // should in fact be a strict equality, enforced by the databases's FK constraint on team table
 };
 
-export const processTeamRedemption = async (teamName: string) => {
+export const processTeamRedemption = async (
+  teamName: string
+): Promise<Redemption[]> => {
   const hasTeamRedeemed = await checkTeamHasRedeemed(teamName);
   if (hasTeamRedeemed) {
     throw new Error("cannot redeem as team has already redeemed!");
@@ -55,5 +63,5 @@ export const processTeamRedemption = async (teamName: string) => {
     `INSERT INTO ${REDEMPTION_TABLE} VALUES (DEFAULT, '${teamName}', ${Date.now()})`
   );
   client.release();
-  return res.rows;
+  return res.rows as Redemption[];
 };
